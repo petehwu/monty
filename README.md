@@ -13,4 +13,4 @@ opcodes1.c | opcode functions
 opcodes2.c | opcode functions
 
 ### Author 
-Peter Wu
+Pete H Wu
