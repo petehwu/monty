@@ -33,7 +33,7 @@ int main(int argc, char **argv)
 		line_number++;
 		gloval->buffer = buffer;
 		gloval->ln = line_number;
-		if (read > 1)
+		if (read >= 1)
 		{
 			opcode = strtok(buffer, " \n");
 			val = strtok(NULL, " \n");
@@ -43,7 +43,7 @@ int main(int argc, char **argv)
 				continue;
 			get_instt_func(&opcode)(&stack, line_number);
 		}
-	} while (read > 1);
+	} while (read >= 1);
 	clean_up_exit(0, &stack);
 	return (0);
 }

@@ -43,6 +43,8 @@ void clean_up_exit(int e_stat, stack_t **stack)
 	}
 	else
 	{
+		if (gloval)
+			free(gloval);
 		exit(EXIT_SUCCESS);
 	}
 }

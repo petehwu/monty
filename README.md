@@ -9,7 +9,8 @@ File | Description
 ---|---
 monty.h | header file
 main.c | main function
-opcodes.c | opcodes
+opcodes1.c | opcode functions
+opcodes2.c | opcode functions
 
 ### Author 
 Peter Wu
