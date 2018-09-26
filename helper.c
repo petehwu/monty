@@ -7,6 +7,12 @@
  */
 void clean_up_exit(int e_stat, stack_t **stack)
 {
+	if (e_stat == WRONG_ARGS)
+		fprintf(stderr, "USAGE: monty file\n");
+	else if (e_stat == FILE_ERR)
+		fprintf(stderr, "Error: Can't open file %s\n", gloval->filename);
+	else if (e_stat == MALLOC_FAIL)
+		fprintf(stderr, "Error: malloc failed\n");
 	if (gloval)
 	{
 		if (gloval->fd)
@@ -18,19 +24,9 @@ void clean_up_exit(int e_stat, stack_t **stack)
 		free(gloval);
 	}
 	if (e_stat == GOOD_EXIT)
-	{
 		exit(EXIT_SUCCESS);
-	}
 	else
-	{
-		if (e_stat == WRONG_ARGS)
-			fprintf(stderr, "USAGE: monty file\n");
-		else if (e_stat == FILE_ERR)
-			fprintf(stderr, "Error: Can't open file %s\n", gloval->filename);
-		else if (e_stat == MALLOC_FAIL)
-			fprintf(stderr, "Error: malloc failed\n");
 		exit(EXIT_FAILURE);
-	}
 }
 /**
  * free_stack - frees all nodes in the  stack
