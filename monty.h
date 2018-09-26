@@ -3,7 +3,6 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include <fcntl.h>
 #include <string.h>
 
 #define GOOD_EXIT 0
@@ -59,15 +58,22 @@ typedef struct instruction_s
 	void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
 
-void (*get_instt_func(char **s, stack_t **stack, unsigned int line_number))
-	(stack_t **stack, unsigned int line_number);
-void  opc_push(stack_t **stack, unsigned int line_number);
-void  opc_pall(stack_t **stack, unsigned int line_number);
-void  opc_pint(stack_t **stack, unsigned int line_number);
-void  opc_pop(stack_t **stack, unsigned int line_number);
-void  opc_swap(stack_t **stack, unsigned int line_number);
-void  opc_add(stack_t **stack, unsigned int line_number);
-void  opc_nop(stack_t **stack, unsigned int line_number);
+void (*get_instt_func(char **s, stack_t **stack, unsigned int
+	line_number))(stack_t **stack, unsigned int line_number);
+void opc_push(stack_t **stack, unsigned int line_number);
+void opc_pall(stack_t **stack, unsigned int line_number);
+void opc_pint(stack_t **stack, unsigned int line_number);
+void opc_pop(stack_t **stack, unsigned int line_number);
+void opc_swap(stack_t **stack, unsigned int line_number);
+void opc_add(stack_t **stack, unsigned int line_number);
+void opc_nop(stack_t **stack, unsigned int line_number);
+void opc_mul(stack_t **stack, unsigned int line_number);
+void opc_mod(stack_t **stack, unsigned int line_number);
+void opc_pchar(stack_t **stack, unsigned int line_number);
+void opc_pstr(stack_t **stack, unsigned int line_number);
+void opc_sub(stack_t **stack, unsigned int line_number);
+void opc_div(stack_t **stack, unsigned int line_number);
+
 void  clean_up_exit(int e_stat, stack_t **stack);
 void free_stack(stack_t **stack);
 

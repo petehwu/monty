@@ -37,10 +37,10 @@ int main(int argc, char **argv)
 			val = strtok(NULL, " \n");
 			gloval->opcode = opcode;
 			gloval->val = val;
-			if (opcode)
-				line_number++;
-			else
+			if (!opcode || opcode[0] == '#')
 				continue;
+			else
+				line_number++;
 			get_instt_func(&opcode, &stack, line_number)(&stack, line_number);
 		}
 	} while (read >= 1);

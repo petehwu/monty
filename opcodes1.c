@@ -17,6 +17,12 @@ void (*get_instt_func(char **s, stack_t **stack, unsigned int line_number))(
 		{"swap", opc_swap},
 		{"add", opc_add},
 		{"nop", opc_nop},
+		{"mul", opc_mul},
+		{"mod", opc_mod},
+		{"pchar", opc_pchar},
+		{"pstr", opc_pstr},
+		{"sub", opc_sub},
+		{"div", opc_div},
 		{NULL, NULL}
 	};
 	int i = 0;
