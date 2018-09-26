@@ -6,21 +6,16 @@
 #include <fcntl.h>
 #include <string.h>
 
-#define WRONG_ARGS 1
-#define FILE_ERR 2
-#define INVAL_OP 3
-#define PUSH_ERR 4
-#define MALLOC_FAIL 5
-#define PINT_ERR 6
-#define POP_ERR 7
-#define SWAP_ERR 8
-#define ADD_ERR 9
-/** struct global_var - global varariable holding pointers to everything needed
+#define GOOD_EXIT 0
+#define BAD_EXIT 1
+#define WRONG_ARGS 2
+#define FILE_ERR 3
+#define MALLOC_FAIL 4
+/**
+ * struct global_var - global varariable holding pointers to everything needed
  * @val: pointer to integer
  * @fd: file stream
  * @buffer: pointer to the buffer
- * @ln: linenumber
- * @e_stat: exit status
  * @filename: pointer to filename
  * @opcode: pointer to opcode
  */
@@ -29,7 +24,6 @@ typedef struct global_var
 	char *filename;
 	FILE *fd;
 	char *buffer;
-	unsigned int ln;
 	char *opcode;
 	char *val;
 } global_var;
@@ -65,7 +59,8 @@ typedef struct instruction_s
 	void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
 
-void (*get_instt_func(char **s))(stack_t **stack, unsigned int line_number);
+void (*get_instt_func(char **s, stack_t **stack, unsigned int line_number))
+	(stack_t **stack, unsigned int line_number);
 void  opc_push(stack_t **stack, unsigned int line_number);
 void  opc_pall(stack_t **stack, unsigned int line_number);
 void  opc_pint(stack_t **stack, unsigned int line_number);
@@ -73,7 +68,6 @@ void  opc_pop(stack_t **stack, unsigned int line_number);
 void  opc_swap(stack_t **stack, unsigned int line_number);
 void  opc_add(stack_t **stack, unsigned int line_number);
 void  opc_nop(stack_t **stack, unsigned int line_number);
-void  opc_notfound(stack_t **stack, unsigned int line_number);
 void  clean_up_exit(int e_stat, stack_t **stack);
 void free_stack(stack_t **stack);
 
