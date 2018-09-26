@@ -30,20 +30,20 @@ int main(int argc, char **argv)
 	gloval->fd = fd;
 	do {
 		read = getline(&buffer, &cread, fd);
-		line_number++;
 		gloval->buffer = buffer;
-		gloval->ln = line_number;
 		if (read >= 1)
 		{
 			opcode = strtok(buffer, " \n");
 			val = strtok(NULL, " \n");
 			gloval->opcode = opcode;
 			gloval->val = val;
-			if (!opcode)
+			if (opcode)
+				line_number++;
+			else
 				continue;
-			get_instt_func(&opcode)(&stack, line_number);
+			get_instt_func(&opcode, &stack, line_number)(&stack, line_number);
 		}
 	} while (read >= 1);
-	clean_up_exit(0, &stack);
+	clean_up_exit(GOOD_EXIT, &stack);
 	return (0);
 }

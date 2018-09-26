@@ -22,7 +22,8 @@ void opc_swap(stack_t **stack, unsigned int line_number)
 	}
 	else
 	{
-		clean_up_exit(SWAP_ERR, stack);
+		fprintf(stderr, "L%u: can't swap, stack too short\n", line_number);
+		clean_up_exit(BAD_EXIT, stack);
 	}
 }
 /**
@@ -43,7 +44,8 @@ void opc_add(stack_t **stack, unsigned int line_number)
 	}
 	else
 	{
-		clean_up_exit(ADD_ERR, stack);
+		fprintf(stderr, "L%u: can't add, stack too short\n", line_number);
+		clean_up_exit(BAD_EXIT, stack);
 	}
 }
 /**
@@ -55,17 +57,4 @@ void opc_nop(stack_t **stack, unsigned int line_number)
 {
 	(void) stack;
 	(void) line_number;
-}
-
-/**
- * opc_notfound - dummy function when opcode is not found
- * @stack: pointer to pointer to stack
- * @line_number: linenumber in the file
- */
-void opc_notfound(stack_t **stack, unsigned int line_number)
-{
-	(void) stack;
-	(void) line_number;
-
-	clean_up_exit(INVAL_OP, stack);
 }

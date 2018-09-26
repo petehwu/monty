@@ -2,9 +2,12 @@
 /**
  * get_instt_func - wrapper function to get the correct opcode function
  * @s: opcode to search for
+ * @stack: pointer to pointer to the stack
+ * @line_number: the line_number that is being processed
  * Return: 0 if successful, 1 if failed
  */
-void (*get_instt_func(char **s))(stack_t **stack, unsigned int line_number)
+void (*get_instt_func(char **s, stack_t **stack, unsigned int line_number))(
+		stack_t **stack, unsigned int line_number)
 {
 	instruction_t instt[] = {
 		{"push", opc_push},
@@ -14,7 +17,7 @@ void (*get_instt_func(char **s))(stack_t **stack, unsigned int line_number)
 		{"swap", opc_swap},
 		{"add", opc_add},
 		{"nop", opc_nop},
-		{NULL, opc_notfound}
+		{NULL, NULL}
 	};
 	int i = 0;
 
@@ -25,7 +28,9 @@ void (*get_instt_func(char **s))(stack_t **stack, unsigned int line_number)
 		i++;
 
 	}
-	return (instt[i].f);
+	fprintf(stderr, "L%u: unknown instruction %s\n", line_number, s[0]);
+	clean_up_exit(BAD_EXIT, stack);
+	return (NULL);
 }
 /**
  * opc_push - pushes a value onto the stack
@@ -40,11 +45,17 @@ void opc_push(stack_t **stack, unsigned int line_number)
 	int i = 0;
 
 	if (!gloval->val)
-		clean_up_exit(PUSH_ERR, stack);
+	{
+		fprintf(stderr, "L%u: usage: push integer\n", line_number);
+		clean_up_exit(BAD_EXIT, stack);
+	}
 	while (gloval->val[i])
 	{
 		if (gloval->val[i] < '0' || gloval->val[i] > '9')
-			clean_up_exit(PUSH_ERR, stack);
+		{
+			fprintf(stderr, "L%u: usage: push integer\n", line_number);
+			clean_up_exit(BAD_EXIT, stack);
+		}
 		i++;
 	}
 	newnode = malloc(sizeof(stack_t));
@@ -97,7 +108,8 @@ void opc_pint(stack_t **stack, unsigned int line_number)
 		printf("%d\n", temp->n);
 	else
 	{
-		clean_up_exit(PINT_ERR, stack);
+		fprintf(stderr, "L%u: can't pint, stack empty\n", line_number);
+		clean_up_exit(BAD_EXIT, stack);
 	}
 }
 
@@ -126,6 +138,7 @@ void opc_pop(stack_t **stack, unsigned int line_number)
 	}
 	else
 	{
-		clean_up_exit(POP_ERR, stack);
+		fprintf(stderr, "L%u: can't pop an empty stack\n", line_number);
+		clean_up_exit(BAD_EXIT, stack);
 	}
 }
