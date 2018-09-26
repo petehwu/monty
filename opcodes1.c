@@ -46,10 +46,10 @@ void (*get_instt_func(char **s, stack_t **stack, unsigned int line_number))(
  */
 void opc_push(stack_t **stack, unsigned int line_number)
 {
-	(void) line_number;
-	stack_t *newnode;
 	int i = 0;
+	stack_t *newnode;
 
+	(void) line_number;
 	if (!gloval->val)
 	{
 		fprintf(stderr, "L%u: usage: push integer\n", line_number);
@@ -89,8 +89,8 @@ void opc_push(stack_t **stack, unsigned int line_number)
 void opc_pall(stack_t **stack, unsigned int line_number)
 {
 	stack_t *temp = *stack;
-	(void) line_number;
 
+	(void) line_number;
 	if (temp)
 	{
 		do {
@@ -107,9 +107,9 @@ void opc_pall(stack_t **stack, unsigned int line_number)
  */
 void opc_pint(stack_t **stack, unsigned int line_number)
 {
-	(void) line_number;
 	stack_t *temp = *stack;
 
+	(void) line_number;
 	if (temp)
 		printf("%d\n", temp->n);
 	else
@@ -126,9 +126,9 @@ void opc_pint(stack_t **stack, unsigned int line_number)
  */
 void opc_pop(stack_t **stack, unsigned int line_number)
 {
-	(void) line_number;
 	stack_t *temp = *stack;
 
+	(void) line_number;
 	if (temp)
 	{
 		if (temp->next)

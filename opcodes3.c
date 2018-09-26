@@ -91,10 +91,9 @@ void opc_pchar(stack_t **stack, unsigned int line_number)
  */
 void opc_pstr(stack_t **stack, unsigned int line_number)
 {
-	(void) line_number;
-
 	stack_t *temp = *stack;
 
+	(void) line_number;
 	if (!temp)
 	{
 		printf("\n");

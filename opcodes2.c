@@ -6,9 +6,9 @@
  */
 void opc_swap(stack_t **stack, unsigned int line_number)
 {
-	(void) line_number;
 	stack_t *temp = *stack, *tempnext;
 
+	(void) line_number;
 	if (temp && temp->next)
 	{
 		tempnext = temp->next;
