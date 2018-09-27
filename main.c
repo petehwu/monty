@@ -25,6 +25,8 @@ int main(int argc, char **argv)
 	gloval->filename = argv[1];
 	gloval->fd = fd;
 	gloval->buffer = buffer;
+	gloval->is_stack = 1;
+	gloval->tail = NULL;
 	if (!fd)
 		clean_up_exit(FILE_ERR, &stack);
 	gloval->fd = fd;
