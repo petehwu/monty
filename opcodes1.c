@@ -49,7 +49,6 @@ void opc_push(stack_t **stack, unsigned int line_number)
 	int i = 0;
 	stack_t *newnode;
 
-	(void) line_number;
 	if (!gloval->val)
 	{
 		fprintf(stderr, "L%u: usage: push integer\n", line_number);

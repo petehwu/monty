@@ -78,9 +78,8 @@ void opc_pchar(stack_t **stack, unsigned int line_number)
 		}
 		else
 		{
-			printf("%d", temp->n);
+			printf("%c\n", temp->n);
 		}
-		printf("\n");
 
 	}
 }
@@ -94,18 +93,15 @@ void opc_pstr(stack_t **stack, unsigned int line_number)
 	stack_t *temp = *stack;
 
 	(void) line_number;
-	if (!temp)
-	{
-		printf("\n");
-	}
-	else
+	if (temp)
 	{
 		do {
 			if (temp->n >= 32 && temp->n <= 126)
 				printf("%c", temp->n);
-
+			temp = temp->next;
 		} while (temp &&  temp->n > 31 && temp->n < 127);
 	}
+	printf("\n");
 
 }
 

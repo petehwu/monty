@@ -33,14 +33,13 @@ int main(int argc, char **argv)
 		gloval->buffer = buffer;
 		if (read >= 1)
 		{
-			opcode = strtok(buffer, " \n");
-			val = strtok(NULL, " \n");
+			opcode = strtok(buffer, " \t\n");
+			val = strtok(NULL, " \t\n");
+			line_number++;
 			gloval->opcode = opcode;
 			gloval->val = val;
 			if (!opcode || opcode[0] == '#')
 				continue;
-			else
-				line_number++;
 			get_instt_func(&opcode, &stack, line_number)(&stack, line_number);
 		}
 	} while (read >= 1);
