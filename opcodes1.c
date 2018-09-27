@@ -55,10 +55,16 @@ void opc_push(stack_t **stack, unsigned int line_number)
 		fprintf(stderr, "L%u: usage: push integer\n", line_number);
 		clean_up_exit(BAD_EXIT, stack);
 	}
+	if (gloval->val[i] != '+' && gloval->val[i] != '-' &&
+			(gloval->val[i] < '0' || gloval->val[i] > '9'))
+	{
+		fprintf(stderr, "L%u: usage: push integer\n", line_number);
+		clean_up_exit(BAD_EXIT, stack);
+	}
+	i++;
 	while (gloval->val[i])
 	{
-		if (gloval->val[i] != '+' && gloval->val[i] != '-' &&
-				(gloval->val[i] < '0' || gloval->val[i] > '9'))
+		if (gloval->val[i] < '0' || gloval->val[i] > '9')
 		{
 			fprintf(stderr, "L%u: usage: push integer\n", line_number);
 			clean_up_exit(BAD_EXIT, stack);
