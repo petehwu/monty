@@ -45,3 +45,29 @@ void free_stack(stack_t **stack)
 		} while (tempnext);
 	}
 }
+/**
+ * check_val - helper function to check if val is a valid number
+ * @stack:  pointer to pointer to head of stack
+ * @line_number: line number where operation is
+ */
+void check_val(stack_t **stack, unsigned int line_number)
+{
+	int i = 0;
+
+	if (!gloval->val)
+	{
+		fprintf(stderr, "L%u: usage: push integer\n", line_number);
+		clean_up_exit(BAD_EXIT, stack);
+	}
+	while (gloval->val[i])
+	{
+		if (gloval->val[i] != '+' && gloval->val[i] != '-' &&
+				(gloval->val[i] < '0' || gloval->val[i] > '9'))
+		{
+			fprintf(stderr, "L%u: usage: push integer\n", line_number);
+			clean_up_exit(BAD_EXIT, stack);
+		}
+		i++;
+	}
+}
+

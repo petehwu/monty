@@ -23,6 +23,10 @@ void (*get_instt_func(char **s, stack_t **stack, unsigned int line_number))(
 		{"pstr", opc_pstr},
 		{"sub", opc_sub},
 		{"div", opc_div},
+		{"rotl", opc_rotl},
+		{"rotr", opc_rotr},
+		{"stack", opc_stack},
+		{"queue", opc_queue},
 		{NULL, NULL}
 	};
 	int i = 0;
@@ -46,38 +50,36 @@ void (*get_instt_func(char **s, stack_t **stack, unsigned int line_number))(
  */
 void opc_push(stack_t **stack, unsigned int line_number)
 {
-	int i = 0;
-	stack_t *newnode;
+	stack_t *newnode, *old_tail = gloval->tail;
 
-	if (!gloval->val)
-	{
-		fprintf(stderr, "L%u: usage: push integer\n", line_number);
-		clean_up_exit(BAD_EXIT, stack);
-	}
-	while (gloval->val[i])
-	{
-		if (gloval->val[i] != '+' && gloval->val[i] != '-' &&
-				(gloval->val[i] < '0' || gloval->val[i] > '9'))
-		{
-			fprintf(stderr, "L%u: usage: push integer\n", line_number);
-			clean_up_exit(BAD_EXIT, stack);
-		}
-		i++;
-	}
+	check_val(stack, line_number);
 	newnode = malloc(sizeof(stack_t));
 	if (!newnode)
 		clean_up_exit(MALLOC_FAIL, stack);
 	newnode->n = atoi(gloval->val);
-	newnode->prev = NULL;
 	if (!*stack)
 	{
+		newnode->prev = NULL;
 		newnode->next = NULL;
 		*stack = newnode;
+		gloval->tail = newnode;
 	}
 	else
 	{
-		newnode->next = *stack;
-		*stack = newnode;
+		if (gloval->is_stack == 1)
+		{
+			(*stack)->prev = newnode;
+			newnode->next = *stack;
+			*stack = newnode;
+		}
+		else
+		{
+			gloval->tail = newnode;
+			old_tail->next = newnode;
+			newnode->prev = old_tail;
+			newnode->next = NULL;
+
+		}
 	}
 }
 
@@ -138,9 +140,11 @@ void opc_pop(stack_t **stack, unsigned int line_number)
 		}
 		else
 		{
+			gloval->tail = NULL;
 			*stack = NULL;
 		}
 		free(temp);
+
 	}
 	else
 	{

@@ -10,23 +10,6 @@
 #define WRONG_ARGS 2
 #define FILE_ERR 3
 #define MALLOC_FAIL 4
-/**
- * struct global_var - global varariable holding pointers to everything needed
- * @val: pointer to integer
- * @fd: file stream
- * @buffer: pointer to the buffer
- * @filename: pointer to filename
- * @opcode: pointer to opcode
- */
-typedef struct global_var
-{
-	char *filename;
-	FILE *fd;
-	char *buffer;
-	char *opcode;
-	char *val;
-} global_var;
-extern global_var *gloval;
 
 /**
  * struct stack_s - doubly linked list representation of a stack (or queue)
@@ -43,6 +26,29 @@ typedef struct stack_s
 	struct stack_s *prev;
 	struct stack_s *next;
 } stack_t;
+
+/**
+ * struct global_var - global varariable holding pointers to everything needed
+ * @val: pointer to integer
+ * @fd: file stream
+ * @buffer: pointer to the buffer
+ * @filename: pointer to filename
+ * @opcode: pointer to opcode
+ * @is_stack: determine if we do stack or queue operation
+ * @tail: pointer to tail
+ */
+typedef struct global_var
+{
+	char *filename;
+	FILE *fd;
+	char *buffer;
+	char *opcode;
+	char *val;
+	int is_stack;
+	stack_t *tail;
+} global_var;
+
+extern global_var *gloval;
 
 /**
  * struct instruction_s - opcode and its function
@@ -73,7 +79,12 @@ void opc_pchar(stack_t **stack, unsigned int line_number);
 void opc_pstr(stack_t **stack, unsigned int line_number);
 void opc_sub(stack_t **stack, unsigned int line_number);
 void opc_div(stack_t **stack, unsigned int line_number);
+void opc_rotl(stack_t **stack, unsigned int line_number);
+void opc_rotr(stack_t **stack, unsigned int line_number);
+void opc_stack(stack_t **stack, unsigned int line_number);
+void opc_queue(stack_t **stack, unsigned int line_number);
 
+void check_val(stack_t **stack, unsigned int line_number);
 void  clean_up_exit(int e_stat, stack_t **stack);
 void free_stack(stack_t **stack);
 
